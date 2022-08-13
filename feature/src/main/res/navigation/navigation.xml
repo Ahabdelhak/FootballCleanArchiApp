@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/competitionsResultFragment">
+
+    <fragment
+        android:id="@+id/competitionsResultFragment"
+        android:name="com.example.ui.competitionsResult.ui.CompetitionResultFragment"
+        android:label="fragment_search_result"
+        tools:layout="@layout/fragment_competition_result"/>
+
+
+</navigation>
