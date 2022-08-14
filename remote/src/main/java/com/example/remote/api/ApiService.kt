@@ -13,13 +13,13 @@ interface ApiService {
     @GET("/v2/competitions/")
     suspend fun competitionResult(): Response<CompetitionResponse>
 
-    // TODO: 14/08/2022 Apply token interceptor or Build Config
+    // TODO: 14/08/2022 May apply token interceptor or Build Config
     @GET("/v2/competitions/{id}")
     suspend fun getCompetitionDetails(
         @Path("id") id: Int, @Header("X-Auth-Token") token:String?="8c2f1b0b6b2d4ee2997ef7729d7f35d5"
     ): Response<CompetitionDetailsResponse>
 
-    // TODO: 14/08/2022 Apply token interceptor or Build Config
+    // TODO: 14/08/2022 May apply token interceptor or Build Config
     @GET("/v2/competitions/{id}/teams")
     suspend fun getTeams(
         @Path("id") id: Int, @Header("X-Auth-Token") token:String?="8c2f1b0b6b2d4ee2997ef7729d7f35d5"

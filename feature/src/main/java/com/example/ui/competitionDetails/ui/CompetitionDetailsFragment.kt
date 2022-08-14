@@ -9,10 +9,12 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import com.example.entity.CompetitionDetailsResponse
+import com.example.feature.R
 import com.example.feature.core.BaseFragment
 import com.example.feature.databinding.FragmentCompetitionDetailsBinding
 import com.example.ui.competitionDetails.contract.CompetitionDetailsContract
 import com.example.ui.competitionDetails.vm.CompetitionDetailsViewModel
+import com.google.android.material.tabs.TabLayout
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -21,16 +23,14 @@ class CompetitionDetailsFragment : BaseFragment<FragmentCompetitionDetailsBindin
     private val viewModel: CompetitionDetailsViewModel by viewModels()
     private val args: CompetitionDetailsFragmentArgs by navArgs()
 
-
     override val bindLayout: (LayoutInflater, ViewGroup?, Boolean) -> FragmentCompetitionDetailsBinding
         get() = FragmentCompetitionDetailsBinding::inflate
 
     override fun prepareView(savedInstanceState: Bundle?) {
-
         viewModel.setEvent(CompetitionDetailsContract.Event.GetCompetitionLDetails(args.id.toInt()))
         initObservers()
+        initTabs()
     }
-
 
     /**
      * Initialize Observers
@@ -55,9 +55,28 @@ class CompetitionDetailsFragment : BaseFragment<FragmentCompetitionDetailsBindin
         }
 
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.uiState.collect {
+                when (val state = it.competitionTeamsState) {
+                    is CompetitionDetailsContract.CompetitionTeamsState.Idle -> {
+                        binding.loadingPb.isVisible = false
+                    }
+                    is CompetitionDetailsContract.CompetitionTeamsState.Loading -> {
+                        binding.loadingPb.isVisible = true
+                    }
+                    is CompetitionDetailsContract.CompetitionTeamsState.Success -> {
+                        val data = state.result
+                        Toast.makeText(requireContext(), data.teams[0].name, Toast.LENGTH_SHORT).show()
+                        binding.loadingPb.isVisible = false
+                    }
+                }
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.effect.collect {
                 when (it) {
                     is CompetitionDetailsContract.Effect.ShowError -> {
+                        binding.loadingPb.isVisible = false
                         val msg = it.message
                         Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
                     }
@@ -72,5 +91,20 @@ class CompetitionDetailsFragment : BaseFragment<FragmentCompetitionDetailsBindin
         binding.tvEndDate.text = data.currentSeason.endDate
     }
 
-
+    private fun initTabs() {
+        binding.tabLayout.addTab(binding.tabLayout.newTab().setText(getString(R.string.seasons)))
+        binding.tabLayout.addTab(binding.tabLayout.newTab().setText(getString(R.string.teams)))
+        binding.tabLayout.tabGravity = TabLayout.GRAVITY_FILL
+        val adapter = MyAdapter(requireContext(), activity?.supportFragmentManager!!,
+            binding.tabLayout.tabCount)
+        binding.viewPager.adapter = adapter
+        binding.viewPager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(binding.tabLayout))
+        binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab) {
+                binding.viewPager.currentItem = tab.position
+            }
+            override fun onTabUnselected(tab: TabLayout.Tab) {}
+            override fun onTabReselected(tab: TabLayout.Tab) {}
+        })
+    }
 }
