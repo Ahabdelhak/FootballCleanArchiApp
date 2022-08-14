@@ -1,6 +1,8 @@
 package com.example.data.repository
 
+import com.example.entity.CompetitionDetailsResponse
 import com.example.entity.CompetitionResponse
+import com.example.entity.TeamsResponse
 
 
 /**
@@ -9,5 +11,7 @@ import com.example.entity.CompetitionResponse
 interface RemoteDataSource {
 
     suspend fun competitionResult(): CompetitionResponse
+    suspend fun competitionDetailsResult(id:Int): CompetitionDetailsResponse
+    suspend fun competitionTeamsResult(id:Int): TeamsResponse
 
 }

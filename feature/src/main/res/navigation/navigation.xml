@@ -16,13 +16,13 @@
             app:destination="@id/competitionDetailsFragment" />
 
         <argument
-            android:name="id"
+            android:name="query"
             app:argType="string" />
     </fragment>
 
     <fragment
         android:id="@+id/competitionDetailsFragment"
-        android:name="com.example.ui.competitionDetails.ui.competitionDetailsFragment"
+        android:name="com.example.ui.competitionDetails.ui.CompetitionDetailsFragment"
         android:label="fragment_competition_detail"
         tools:layout="@layout/fragment_competition_details">
 

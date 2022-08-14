@@ -1,60 +1,76 @@
 package com.example.ui.competitionDetails.ui
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import com.example.feature.R
+import android.widget.Toast
+import androidx.core.view.isVisible
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.navArgs
+import com.example.entity.CompetitionDetailsResponse
+import com.example.feature.core.BaseFragment
+import com.example.feature.databinding.FragmentCompetitionDetailsBinding
+import com.example.ui.competitionDetails.contract.CompetitionDetailsContract
+import com.example.ui.competitionDetails.vm.CompetitionDetailsViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+@AndroidEntryPoint
+class CompetitionDetailsFragment : BaseFragment<FragmentCompetitionDetailsBinding>() {
 
-/**
- * A simple [Fragment] subclass.
- * Use the [competitionDetailsFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class competitionDetailsFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private val viewModel: CompetitionDetailsViewModel by viewModels()
+    private val args: CompetitionDetailsFragmentArgs by navArgs()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+
+    override val bindLayout: (LayoutInflater, ViewGroup?, Boolean) -> FragmentCompetitionDetailsBinding
+        get() = FragmentCompetitionDetailsBinding::inflate
+
+    override fun prepareView(savedInstanceState: Bundle?) {
+
+        viewModel.setEvent(CompetitionDetailsContract.Event.GetCompetitionLDetails(args.id.toInt()))
+        initObservers()
+    }
+
+
+    /**
+     * Initialize Observers
+     */
+    private fun initObservers() {
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.uiState.collect {
+                when (val state = it.competitionDetailsState) {
+                    is CompetitionDetailsContract.CompetitionDetailsState.Idle -> {
+                        binding.loadingPb.isVisible = false
+                    }
+                    is CompetitionDetailsContract.CompetitionDetailsState.Loading -> {
+                        binding.loadingPb.isVisible = true
+                    }
+                    is CompetitionDetailsContract.CompetitionDetailsState.Success -> {
+                        val data = state.result
+                        bindDataToView(data)
+                        binding.loadingPb.isVisible = false
+                    }
+                }
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.effect.collect {
+                when (it) {
+                    is CompetitionDetailsContract.Effect.ShowError -> {
+                        val msg = it.message
+                        Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_competition_details, container, false)
+    private fun bindDataToView(data: CompetitionDetailsResponse) {
+        binding.tvCompetitionName.text = data.name
+        binding.tvStartDate.text = data.currentSeason.startDate
+        binding.tvEndDate.text = data.currentSeason.endDate
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment competitionDetailsFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            competitionDetailsFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
-    }
+
 }
