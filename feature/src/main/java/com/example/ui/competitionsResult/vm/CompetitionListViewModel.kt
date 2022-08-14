@@ -33,6 +33,10 @@ class CompetitionListViewModel @Inject constructor(
             is CompetitionListContract.Event.GetCompetitionList -> {
                 getCompetitionList()
             }
+            is CompetitionListContract.Event.OnCompetitionItemClicked -> {
+                val id = event.id
+                setEffect { CompetitionListContract.Effect.Navigate(id) }
+            }
         }
     }
 

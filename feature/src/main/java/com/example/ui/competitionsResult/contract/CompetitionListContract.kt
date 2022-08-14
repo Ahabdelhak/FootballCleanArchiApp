@@ -13,6 +13,7 @@ class CompetitionListContract {
 
     sealed class Event : UiEvent {
         object GetCompetitionList : Event()
+        data class OnCompetitionItemClicked(val id : Int) : Event()
     }
 
     data class State(
@@ -27,6 +28,7 @@ class CompetitionListContract {
 
     sealed class Effect : UiEffect {
         data class ShowError(val message : String?) : Effect()
+        data class Navigate(val id : Int) : Effect()
     }
 
 }

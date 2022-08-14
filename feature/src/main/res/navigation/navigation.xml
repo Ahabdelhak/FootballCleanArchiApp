@@ -8,8 +8,28 @@
     <fragment
         android:id="@+id/competitionsResultFragment"
         android:name="com.example.ui.competitionsResult.ui.CompetitionResultFragment"
-        android:label="fragment_search_result"
-        tools:layout="@layout/fragment_competition_result"/>
+        android:label="fragment_competition_result"
+        tools:layout="@layout/fragment_competition_result">
+
+        <action
+            android:id="@+id/action_competitionResultFragment_to_competitionDetailsFragment"
+            app:destination="@id/competitionDetailsFragment" />
+
+        <argument
+            android:name="id"
+            app:argType="string" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/competitionDetailsFragment"
+        android:name="com.example.ui.competitionDetails.ui.competitionDetailsFragment"
+        android:label="fragment_competition_detail"
+        tools:layout="@layout/fragment_competition_details">
+
+        <argument
+            android:name="id"
+            app:argType="string" />
+    </fragment>
 
 
 </navigation>
