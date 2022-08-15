@@ -1,25 +1,27 @@
 package com.example.ui.competitionDetails.ui
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import com.example.feature.R
+import com.example.entity.Team
+import com.example.feature.core.BaseFragment
+import com.example.feature.databinding.FragmentTeamsBinding
+import dagger.hilt.android.AndroidEntryPoint
 
-class TeamsFragment : Fragment() {
+@AndroidEntryPoint
+class TeamsFragment(var data: List<Team>) : BaseFragment<FragmentTeamsBinding>() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    private val adapter: TeamsAdapter by lazy {
+        TeamsAdapter(emptyList()) { item ->
 
+        }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_teams, container, false)
-    }
+    override val bindLayout: (LayoutInflater, ViewGroup?, Boolean) -> FragmentTeamsBinding
+        get() = FragmentTeamsBinding::inflate
 
+    override fun prepareView(savedInstanceState: Bundle?) {
+        binding.rvTeams.adapter = adapter
+        adapter.appendList(data)
+    }
 }

@@ -1,26 +1,28 @@
 package com.example.ui.competitionDetails.ui
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import com.example.feature.R
+import com.example.entity.Season
+import com.example.feature.core.BaseFragment
+import com.example.feature.databinding.FragmentSeasonsBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
+class SeasonsFragment(var season: List<Season>) : BaseFragment<FragmentSeasonsBinding>() {
 
-class SeasonsFragment : Fragment() {
+    private val adapter: SeasonAdapter by lazy {
+        SeasonAdapter(emptyList()) { _ ->
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
+        }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_seasons, container, false)
-    }
+    override val bindLayout: (LayoutInflater, ViewGroup?, Boolean) -> FragmentSeasonsBinding
+        get() = FragmentSeasonsBinding::inflate
 
+    override fun prepareView(savedInstanceState: Bundle?) {
+        binding.rvSeasons.adapter = adapter
+        adapter.appendList(season)
+    }
 }
