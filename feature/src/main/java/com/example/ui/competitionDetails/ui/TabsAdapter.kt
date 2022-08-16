@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
+import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.entity.Season
@@ -17,19 +18,20 @@ internal class TabsAdapter(
     var totalTabs: Int,
      data: List<Team>,
      season: List<Season>
-) : FragmentPagerAdapter(fm) {
-    val mTeams: List<Team> = data
-    val mSeason: List<Season> = season
+) : FragmentStatePagerAdapter(fm) {
+    private val mTeams: List<Team> = data
+    private val mSeason: List<Season> = season
     override fun getItem(position: Int): Fragment {
         return when (position) {
             0 -> {
                 SeasonsFragment(mSeason)
             }
             1 -> {
+                SeasonsFragment(mSeason)
                 TeamsFragment(mTeams)
             }
-            else -> getItem(position)
-        }
+            else -> getItem(position)}
+
     }
     override fun getCount(): Int {
         return totalTabs

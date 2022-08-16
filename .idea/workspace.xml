@@ -6,24 +6,20 @@
     </shared>
   </component>
   <component name="AndroidLogFilters">
-    <option name="TOOL_WINDOW_CUSTOM_FILTER" value="Teams" />
+    <option name="TOOL_WINDOW_CUSTOM_FILTER" value="TraceActivity" />
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
   </component>
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fb4325d8-e72a-47cb-a90a-043253fe7c4e" name="Default Changelist" comment="prepare tab layout view with viewPager">
-      <change afterPath="$PROJECT_DIR$/feature/src/main/res/layout/item_season.xml" afterDir="false" />
+    <list default="true" id="fb4325d8-e72a-47cb-a90a-043253fe7c4e" name="Default Changelist" comment="combine two apis details and bind to views">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entity/src/main/java/com/example/entity/CompetitionDetailsResponse.kt" beforeDir="false" afterPath="$PROJECT_DIR$/entity/src/main/java/com/example/entity/CompetitionDetailsResponse.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entity/src/main/java/com/example/entity/TeamsResponse.kt" beforeDir="false" afterPath="$PROJECT_DIR$/entity/src/main/java/com/example/entity/TeamsResponse.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/feature/src/main/java/com/example/ui/competitionDetails/ui/CompetitionDetailsFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/feature/src/main/java/com/example/ui/competitionDetails/ui/CompetitionDetailsFragment.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/feature/src/main/java/com/example/ui/competitionDetails/ui/SeasonsFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/feature/src/main/java/com/example/ui/competitionDetails/ui/SeasonsFragment.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/feature/src/main/java/com/example/ui/competitionDetails/ui/TabsAdapter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/feature/src/main/java/com/example/ui/competitionDetails/ui/TabsAdapter.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/feature/src/main/java/com/example/ui/competitionDetails/ui/TeamsFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/feature/src/main/java/com/example/ui/competitionDetails/ui/TeamsFragment.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/feature/src/main/java/com/example/ui/competitionDetails/vm/CompetitionDetailsViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/feature/src/main/java/com/example/ui/competitionDetails/vm/CompetitionDetailsViewModel.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/feature/src/main/res/layout/fragment_competition_details.xml" beforeDir="false" afterPath="$PROJECT_DIR$/feature/src/main/res/layout/fragment_competition_details.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/feature/src/main/res/layout/fragment_seasons.xml" beforeDir="false" afterPath="$PROJECT_DIR$/feature/src/main/res/layout/fragment_seasons.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/feature/src/main/res/layout/fragment_teams.xml" beforeDir="false" afterPath="$PROJECT_DIR$/feature/src/main/res/layout/fragment_teams.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/remote/src/main/java/com/example/remote/source/RemoteDataSourceImp.kt" beforeDir="false" afterPath="$PROJECT_DIR$/remote/src/main/java/com/example/remote/source/RemoteDataSourceImp.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,8 +53,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Kotlin Interface" />
-        <option value="Kotlin Class" />
         <option value="layoutResourceFile" />
+        <option value="Kotlin Class" />
       </list>
     </option>
   </component>
@@ -73,6 +69,10 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="android-custom-view/Users/ahmedamer/.gradle/caches/modules-2/files-2.1/androidx.viewpager/viewpager/1.0.0/db045f92188b9d247d5f556866f8861ab68528f0/viewpager-1.0.0-sources.jar!/androidx/viewpager/widget/ViewPager.java_SELECTED" value="ViewPager" />
+    <property name="android-custom-view/Users/ahmedamer/.gradle/caches/modules-2/files-2.1/androidx.viewpager/viewpager/1.0.0/db045f92188b9d247d5f556866f8861ab68528f0/viewpager-1.0.0-sources.jar!/androidx/viewpager/widget/ViewPager.java_ViewPager_DIMENSIONS" value="1080&#10;1920" />
+    <property name="android-custom-view/Users/ahmedamer/.gradle/caches/modules-2/files-2.1/com.google.android.material/material/1.6.1/d4d703885d24c61bc0ec39a9a705969e41d773ef/material-1.6.1-sources.jar!/com/google/android/material/tabs/TabLayout.java_SELECTED" value="TabLayout" />
+    <property name="android-custom-view/Users/ahmedamer/.gradle/caches/modules-2/files-2.1/com.google.android.material/material/1.6.1/d4d703885d24c61bc0ec39a9a705969e41d773ef/material-1.6.1-sources.jar!/com/google/android/material/tabs/TabLayout.java_TabLayout_DIMENSIONS" value="1080&#10;1920" />
     <property name="dart.analysis.tool.window.visible" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/feature/src/main/java/com/example/ui/competitionDetails/ui" />
     <property name="memory.settings.postsync.last.time.stamp" value="1660597244654" />
@@ -195,7 +195,14 @@
       <option name="project" value="LOCAL" />
       <updated>1660520802368</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="combine two apis details and bind to views">
+      <created>1660599233703</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1660599233703</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -217,6 +224,7 @@
     <MESSAGE value="binding competition list data with navigation" />
     <MESSAGE value="competition details business logic and bind basic data" />
     <MESSAGE value="prepare tab layout view with viewPager" />
-    <option name="LAST_COMMIT_MESSAGE" value="prepare tab layout view with viewPager" />
+    <MESSAGE value="combine two apis details and bind to views" />
+    <option name="LAST_COMMIT_MESSAGE" value="combine two apis details and bind to views" />
   </component>
 </project>

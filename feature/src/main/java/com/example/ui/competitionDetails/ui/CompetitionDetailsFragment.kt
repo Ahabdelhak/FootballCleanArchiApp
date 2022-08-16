@@ -45,7 +45,7 @@ class CompetitionDetailsFragment : BaseFragment<FragmentCompetitionDetailsBindin
      * Initialize Observers
      */
     private fun initObservers() {
-       viewLifecycleOwner.lifecycleScope.launch {
+       val job = viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED){
                 launch {
                     viewModel.uiState.collect {

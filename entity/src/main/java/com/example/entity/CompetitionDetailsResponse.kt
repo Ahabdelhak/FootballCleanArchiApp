@@ -10,5 +10,5 @@ data class CompetitionDetailsResponse(
     val name: String,
     val plan: String,
     val seasons: List<Season>,
-    val errorCode: Int
-)
+    val errorCode: Int,
+    val message: String)
